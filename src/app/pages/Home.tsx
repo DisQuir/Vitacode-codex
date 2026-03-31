@@ -1,24 +1,16 @@
-﻿import { useEffect } from 'react';
-
-const TILDA_LANDING_URL = 'https://vitacode.tilda.ws/';
+﻿import { Navigate } from 'react-router';
+import { useAuth } from '../context/AuthContext';
 
 export function Home() {
-  useEffect(() => {
-    window.location.replace(TILDA_LANDING_URL);
-  }, []);
+  const { user, loading } = useAuth();
 
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-[#f4f7f8] px-4 text-center">
-      <div>
-        <p className="font-['DM_Sans'] text-[16px] text-[#1f1f1f]/70">Перенаправляем на лендинг...</p>
-        <a
-          className="mt-4 inline-flex rounded-full bg-[#02b1cc] px-5 py-3 font-['DM_Sans'] text-[15px] font-semibold text-white"
-          href={TILDA_LANDING_URL}
-        >
-          Открыть страницу
-        </a>
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#f4f7f8] px-4">
+        <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-[#02b1cc]" />
       </div>
-    </div>
-  );
-}
+    );
+  }
 
+  return <Navigate replace to={user ? '/profile' : '/questionnaire/step1'} />;
+}

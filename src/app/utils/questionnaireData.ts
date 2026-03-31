@@ -1,4 +1,4 @@
-export type UserPlan = 'free' | 'premium';
+﻿export type UserPlan = 'free' | 'premium';
 
 export interface QuestionnaireData {
   supplements: Array<{
@@ -67,7 +67,7 @@ interface RegisterPayload {
   plan: UserPlan;
 }
 
-const API_BASE = '/api';
+const API_BASE = 'https://vitacode-codex.onrender.com/api';
 const SESSION_KEY = 'vitacode-session-token';
 const GUEST_QUESTIONNAIRE_KEY = 'vitacode-guest-questionnaire';
 const GUEST_ANALYSES_KEY = 'vitacode-guest-analyses';
@@ -149,7 +149,7 @@ async function apiRequest<T>(path: string, init: RequestInit = {}): Promise<T> {
 
   if (!response.ok) {
     const payload = (await response.json().catch(() => null)) as { error?: string } | null;
-    throw new Error(payload?.error || 'Ошибка запроса к серверу.');
+    throw new Error(payload?.error || '\u041e\u0448\u0438\u0431\u043a\u0430 \u0437\u0430\u043f\u0440\u043e\u0441\u0430 \u043a \u0441\u0435\u0440\u0432\u0435\u0440\u0443.');
   }
 
   if (response.status === 204) {
@@ -247,7 +247,7 @@ export async function saveAnalysis(): Promise<string> {
   if (!getToken()) {
     const questionnaire = getGuestQuestionnaire();
     if (!questionnaire.supplements.length) {
-      throw new Error('Сначала заполните анкету с добавками.');
+      throw new Error('\u0421\u043d\u0430\u0447\u0430\u043b\u0430 \u0437\u0430\u043f\u043e\u043b\u043d\u0438\u0442\u0435 \u0430\u043d\u043a\u0435\u0442\u0443 \u0441 \u0434\u043e\u0431\u0430\u0432\u043a\u0430\u043c\u0438.');
     }
 
     const analysis: SavedAnalysis = {
@@ -345,31 +345,31 @@ const supplementDatabase: Record<
     synergizesWith?: string[];
   }
 > = {
-  'Витамин D3': { recommended: '4000 МЕ', timing: 'morning', note: 'С завтраком' },
-  'Витамин D': { recommended: '4000 МЕ', timing: 'morning', note: 'С завтраком' },
-  'Витамин С': { recommended: '1000 мг', timing: 'morning', note: 'Натощак', synergizesWith: ['Железо'] },
-  'Витамин C': { recommended: '1000 мг', timing: 'morning', note: 'Натощак', synergizesWith: ['Железо'] },
-  'Омега-3': { recommended: '2000 мг', timing: 'evening', note: 'С ужином' },
-  'Магний': { recommended: '400 мг', timing: 'day', note: 'С обедом' },
-  'Цинк': { recommended: '25 мг', timing: 'day', note: 'После еды' },
-  'Железо': {
-    recommended: '18 мг',
+  '\u0412\u0438\u0442\u0430\u043c\u0438\u043d D3': { recommended: '4000 \u041c\u0415', timing: 'morning', note: '\u0421 \u0437\u0430\u0432\u0442\u0440\u0430\u043a\u043e\u043c' },
+  '\u0412\u0438\u0442\u0430\u043c\u0438\u043d D': { recommended: '4000 \u041c\u0415', timing: 'morning', note: '\u0421 \u0437\u0430\u0432\u0442\u0440\u0430\u043a\u043e\u043c' },
+  '\u0412\u0438\u0442\u0430\u043c\u0438\u043d \u0421': { recommended: '1000 \u043c\u0433', timing: 'morning', note: '\u041d\u0430\u0442\u043e\u0449\u0430\u043a', synergizesWith: ['\u0416\u0435\u043b\u0435\u0437\u043e'] },
+  '\u0412\u0438\u0442\u0430\u043c\u0438\u043d C': { recommended: '1000 \u043c\u0433', timing: 'morning', note: '\u041d\u0430\u0442\u043e\u0449\u0430\u043a', synergizesWith: ['\u0416\u0435\u043b\u0435\u0437\u043e'] },
+  '\u041e\u043c\u0435\u0433\u0430-3': { recommended: '2000 \u043c\u0433', timing: 'evening', note: '\u0421 \u0443\u0436\u0438\u043d\u043e\u043c' },
+  '\u041c\u0430\u0433\u043d\u0438\u0439': { recommended: '400 \u043c\u0433', timing: 'day', note: '\u0421 \u043e\u0431\u0435\u0434\u043e\u043c' },
+  '\u0426\u0438\u043d\u043a': { recommended: '25 \u043c\u0433', timing: 'day', note: '\u041f\u043e\u0441\u043b\u0435 \u0435\u0434\u044b' },
+  '\u0416\u0435\u043b\u0435\u0437\u043e': {
+    recommended: '18 \u043c\u0433',
     timing: 'morning',
-    note: 'За 30 мин до еды',
-    interactsWith: ['Кальций'],
-    synergizesWith: ['Витамин С', 'Витамин C'],
+    note: '\u0417\u0430 30 \u043c\u0438\u043d \u0434\u043e \u0435\u0434\u044b',
+    interactsWith: ['\u041a\u0430\u043b\u044c\u0446\u0438\u0439'],
+    synergizesWith: ['\u0412\u0438\u0442\u0430\u043c\u0438\u043d \u0421', '\u0412\u0438\u0442\u0430\u043c\u0438\u043d C'],
   },
-  'Кальций': {
-    recommended: '1000 мг',
+  '\u041a\u0430\u043b\u044c\u0446\u0438\u0439': {
+    recommended: '1000 \u043c\u0433',
     timing: 'evening',
-    note: 'Перед сном',
-    interactsWith: ['Железо'],
-    synergizesWith: ['Витамин D3', 'Витамин D'],
+    note: '\u041f\u0435\u0440\u0435\u0434 \u0441\u043d\u043e\u043c',
+    interactsWith: ['\u0416\u0435\u043b\u0435\u0437\u043e'],
+    synergizesWith: ['\u0412\u0438\u0442\u0430\u043c\u0438\u043d D3', '\u0412\u0438\u0442\u0430\u043c\u0438\u043d D'],
   },
-  'Витамин B12': { recommended: '2.4 мкг', timing: 'morning', note: 'С едой' },
-  'Мультивитамины': { recommended: '1 таблетка', timing: 'morning', note: 'С завтраком' },
-  'Витамин E': { recommended: '400 МЕ', timing: 'morning', note: 'С едой', interactsWith: ['Витамин K'] },
-  'Витамин K': { recommended: '120 мкг', timing: 'morning', note: 'С едой', interactsWith: ['Витамин E'] },
+  '\u0412\u0438\u0442\u0430\u043c\u0438\u043d B12': { recommended: '2.4 \u043c\u043a\u0433', timing: 'morning', note: '\u0421 \u0435\u0434\u043e\u0439' },
+  '\u041c\u0443\u043b\u044c\u0442\u0438\u0432\u0438\u0442\u0430\u043c\u0438\u043d\u044b': { recommended: '1 \u0442\u0430\u0431\u043b\u0435\u0442\u043a\u0430', timing: 'morning', note: '\u0421 \u0437\u0430\u0432\u0442\u0440\u0430\u043a\u043e\u043c' },
+  '\u0412\u0438\u0442\u0430\u043c\u0438\u043d E': { recommended: '400 \u041c\u0415', timing: 'morning', note: '\u0421 \u0435\u0434\u043e\u0439', interactsWith: ['\u0412\u0438\u0442\u0430\u043c\u0438\u043d K'] },
+  '\u0412\u0438\u0442\u0430\u043c\u0438\u043d K': { recommended: '120 \u043c\u043a\u0433', timing: 'morning', note: '\u0421 \u0435\u0434\u043e\u0439', interactsWith: ['\u0412\u0438\u0442\u0430\u043c\u0438\u043d E'] },
 };
 
 export function analyzeSupplements(data: QuestionnaireData): AnalysisResult {
@@ -386,15 +386,15 @@ export function analyzeSupplements(data: QuestionnaireData): AnalysisResult {
       duplicates.push({
         name,
         count,
-        sources: [`Указано ${count} раз`],
+        sources: [`\u0423\u043a\u0430\u0437\u0430\u043d\u043e ${count} \u0440\u0430\u0437`],
       });
     }
   });
 
   const commonDuplicates = [
-    { name: 'Магний', count: 3, sources: ['Multi-Complex', 'Magnesium Plus', 'Sleep Formula'] },
-    { name: 'Витамин B6', count: 2, sources: ['Multi-Complex', 'B-Complex Advanced'] },
-    { name: 'Цинк', count: 2, sources: ['Immune Support', 'Multi-Complex'] },
+    { name: '\u041c\u0430\u0433\u043d\u0438\u0439', count: 3, sources: ['Multi-Complex', 'Magnesium Plus', 'Sleep Formula'] },
+    { name: '\u0412\u0438\u0442\u0430\u043c\u0438\u043d B6', count: 2, sources: ['Multi-Complex', 'B-Complex Advanced'] },
+    { name: '\u0426\u0438\u043d\u043a', count: 2, sources: ['Immune Support', 'Multi-Complex'] },
   ];
 
   const dosageWarnings: AnalysisResult['dosageWarnings'] = [];
@@ -403,12 +403,12 @@ export function analyzeSupplements(data: QuestionnaireData): AnalysisResult {
     if (!dbInfo) return;
 
     const mockDosages: Record<string, { current: string; percent: number; warning?: string }> = {
-      'Витамин D3': { current: '5000 МЕ', percent: 125, warning: 'Превышение рекомендованной дозы на 25%' },
-      'Витамин D': { current: '5000 МЕ', percent: 125, warning: 'Превышение рекомендованной дозы на 25%' },
-      'Витамин С': { current: '500 мг', percent: 50 },
-      'Витамин C': { current: '500 мг', percent: 50 },
-      'Омега-3': { current: '1200 мг', percent: 60 },
-      'Магний': { current: '450 мг', percent: 112, warning: 'Превышение рекомендованной дозы на 12%' },
+      '\u0412\u0438\u0442\u0430\u043c\u0438\u043d D3': { current: '5000 \u041c\u0415', percent: 125, warning: '\u041f\u0440\u0435\u0432\u044b\u0448\u0435\u043d\u0438\u0435 \u0440\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u043e\u0432\u0430\u043d\u043d\u043e\u0439 \u0434\u043e\u0437\u044b \u043d\u0430 25%' },
+      '\u0412\u0438\u0442\u0430\u043c\u0438\u043d D': { current: '5000 \u041c\u0415', percent: 125, warning: '\u041f\u0440\u0435\u0432\u044b\u0448\u0435\u043d\u0438\u0435 \u0440\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u043e\u0432\u0430\u043d\u043d\u043e\u0439 \u0434\u043e\u0437\u044b \u043d\u0430 25%' },
+      '\u0412\u0438\u0442\u0430\u043c\u0438\u043d \u0421': { current: '500 \u043c\u0433', percent: 50 },
+      '\u0412\u0438\u0442\u0430\u043c\u0438\u043d C': { current: '500 \u043c\u0433', percent: 50 },
+      '\u041e\u043c\u0435\u0433\u0430-3': { current: '1200 \u043c\u0433', percent: 60 },
+      '\u041c\u0430\u0433\u043d\u0438\u0439': { current: '450 \u043c\u0433', percent: 112, warning: '\u041f\u0440\u0435\u0432\u044b\u0448\u0435\u043d\u0438\u0435 \u0440\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u043e\u0432\u0430\u043d\u043d\u043e\u0439 \u0434\u043e\u0437\u044b \u043d\u0430 12%' },
     };
 
     const dosageInfo = mockDosages[supplement.name];
@@ -424,13 +424,13 @@ export function analyzeSupplements(data: QuestionnaireData): AnalysisResult {
   });
 
   const recommendations: string[] = [];
-  if (data.goals.includes('immunity')) recommendations.push('Для поддержки иммунитета стоит регулярно принимать витамин D и цинк.');
-  if (data.goals.includes('energy')) recommendations.push('Для энергии важно проверить уровень B12 и железа, особенно при хронической усталости.');
-  if (data.goals.includes('sleep')) recommendations.push('Магний лучше перенести на вечерний прием, чтобы усилить эффект расслабления.');
-  if (duplicates.length > 0) recommendations.push('Есть повторяющиеся компоненты. Стоит сократить дубли, чтобы не перегружать схему приема.');
-  recommendations.push('Жирорастворимые витамины A, D, E и K лучше принимать вместе с едой.');
-  if (supplements.some((item) => item.name === 'Витамин С' || item.name === 'Витамин C')) {
-    recommendations.push('Витамин C помогает усвоению железа, их можно принимать в одном окне.');
+  if (data.goals.includes('immunity')) recommendations.push('\u0414\u043b\u044f \u043f\u043e\u0434\u0434\u0435\u0440\u0436\u043a\u0438 \u0438\u043c\u043c\u0443\u043d\u0438\u0442\u0435\u0442\u0430 \u0441\u0442\u043e\u0438\u0442 \u0440\u0435\u0433\u0443\u043b\u044f\u0440\u043d\u043e \u043f\u0440\u0438\u043d\u0438\u043c\u0430\u0442\u044c \u0432\u0438\u0442\u0430\u043c\u0438\u043d D \u0438 \u0446\u0438\u043d\u043a.');
+  if (data.goals.includes('energy')) recommendations.push('\u0414\u043b\u044f \u044d\u043d\u0435\u0440\u0433\u0438\u0438 \u0432\u0430\u0436\u043d\u043e \u043f\u0440\u043e\u0432\u0435\u0440\u0438\u0442\u044c \u0443\u0440\u043e\u0432\u0435\u043d\u044c B12 \u0438 \u0436\u0435\u043b\u0435\u0437\u0430, \u043e\u0441\u043e\u0431\u0435\u043d\u043d\u043e \u043f\u0440\u0438 \u0445\u0440\u043e\u043d\u0438\u0447\u0435\u0441\u043a\u043e\u0439 \u0443\u0441\u0442\u0430\u043b\u043e\u0441\u0442\u0438.');
+  if (data.goals.includes('sleep')) recommendations.push('\u041c\u0430\u0433\u043d\u0438\u0439 \u043b\u0443\u0447\u0448\u0435 \u043f\u0435\u0440\u0435\u043d\u0435\u0441\u0442\u0438 \u043d\u0430 \u0432\u0435\u0447\u0435\u0440\u043d\u0438\u0439 \u043f\u0440\u0438\u0435\u043c, \u0447\u0442\u043e\u0431\u044b \u0443\u0441\u0438\u043b\u0438\u0442\u044c \u044d\u0444\u0444\u0435\u043a\u0442 \u0440\u0430\u0441\u0441\u043b\u0430\u0431\u043b\u0435\u043d\u0438\u044f.');
+  if (duplicates.length > 0) recommendations.push('\u0415\u0441\u0442\u044c \u043f\u043e\u0432\u0442\u043e\u0440\u044f\u044e\u0449\u0438\u0435\u0441\u044f \u043a\u043e\u043c\u043f\u043e\u043d\u0435\u043d\u0442\u044b. \u0421\u0442\u043e\u0438\u0442 \u0441\u043e\u043a\u0440\u0430\u0442\u0438\u0442\u044c \u0434\u0443\u0431\u043b\u0438, \u0447\u0442\u043e\u0431\u044b \u043d\u0435 \u043f\u0435\u0440\u0435\u0433\u0440\u0443\u0436\u0430\u0442\u044c \u0441\u0445\u0435\u043c\u0443 \u043f\u0440\u0438\u0435\u043c\u0430.');
+  recommendations.push('\u0416\u0438\u0440\u043e\u0440\u0430\u0441\u0442\u0432\u043e\u0440\u0438\u043c\u044b\u0435 \u0432\u0438\u0442\u0430\u043c\u0438\u043d\u044b A, D, E \u0438 K \u043b\u0443\u0447\u0448\u0435 \u043f\u0440\u0438\u043d\u0438\u043c\u0430\u0442\u044c \u0432\u043c\u0435\u0441\u0442\u0435 \u0441 \u0435\u0434\u043e\u0439.');
+  if (supplements.some((item) => item.name === '\u0412\u0438\u0442\u0430\u043c\u0438\u043d \u0421' || item.name === '\u0412\u0438\u0442\u0430\u043c\u0438\u043d C')) {
+    recommendations.push('\u0412\u0438\u0442\u0430\u043c\u0438\u043d C \u043f\u043e\u043c\u043e\u0433\u0430\u0435\u0442 \u0443\u0441\u0432\u043e\u0435\u043d\u0438\u044e \u0436\u0435\u043b\u0435\u0437\u0430, \u0438\u0445 \u043c\u043e\u0436\u043d\u043e \u043f\u0440\u0438\u043d\u0438\u043c\u0430\u0442\u044c \u0432 \u043e\u0434\u043d\u043e\u043c \u043e\u043a\u043d\u0435.');
   }
 
   const timingRecommendations = {
@@ -458,20 +458,20 @@ export function analyzeSupplements(data: QuestionnaireData): AnalysisResult {
       if (processedPairs.has(pairKey)) return;
       processedPairs.add(pairKey);
 
-      if (supplement.name === 'Железо' && interactName === 'Кальций') {
+      if (supplement.name === '\u0416\u0435\u043b\u0435\u0437\u043e' && interactName === '\u041a\u0430\u043b\u044c\u0446\u0438\u0439') {
         interactions.push({
           type: 'warning',
-          supplements: ['Железо', 'Кальций'],
-          interaction: 'Конкурируют за усвоение',
-          recommendation: 'Разнесите прием минимум на 2 часа.',
+          supplements: ['\u0416\u0435\u043b\u0435\u0437\u043e', '\u041a\u0430\u043b\u044c\u0446\u0438\u0439'],
+          interaction: '\u041a\u043e\u043d\u043a\u0443\u0440\u0438\u0440\u0443\u044e\u0442 \u0437\u0430 \u0443\u0441\u0432\u043e\u0435\u043d\u0438\u0435',
+          recommendation: '\u0420\u0430\u0437\u043d\u0435\u0441\u0438\u0442\u0435 \u043f\u0440\u0438\u0435\u043c \u043c\u0438\u043d\u0438\u043c\u0443\u043c \u043d\u0430 2 \u0447\u0430\u0441\u0430.',
         });
       }
-      if (supplement.name === 'Витамин E' && interactName === 'Витамин K') {
+      if (supplement.name === '\u0412\u0438\u0442\u0430\u043c\u0438\u043d E' && interactName === '\u0412\u0438\u0442\u0430\u043c\u0438\u043d K') {
         interactions.push({
           type: 'warning',
-          supplements: ['Витамин E', 'Витамин K'],
-          interaction: 'Высокие дозы витамина E могут снижать эффект витамина K',
-          recommendation: 'Следите за дозировкой витамина E и не превышайте 400 МЕ без рекомендации врача.',
+          supplements: ['\u0412\u0438\u0442\u0430\u043c\u0438\u043d E', '\u0412\u0438\u0442\u0430\u043c\u0438\u043d K'],
+          interaction: '\u0412\u044b\u0441\u043e\u043a\u0438\u0435 \u0434\u043e\u0437\u044b \u0432\u0438\u0442\u0430\u043c\u0438\u043d\u0430 E \u043c\u043e\u0433\u0443\u0442 \u0441\u043d\u0438\u0436\u0430\u0442\u044c \u044d\u0444\u0444\u0435\u043a\u0442 \u0432\u0438\u0442\u0430\u043c\u0438\u043d\u0430 K',
+          recommendation: '\u0421\u043b\u0435\u0434\u0438\u0442\u0435 \u0437\u0430 \u0434\u043e\u0437\u0438\u0440\u043e\u0432\u043a\u043e\u0439 \u0432\u0438\u0442\u0430\u043c\u0438\u043d\u0430 E \u0438 \u043d\u0435 \u043f\u0440\u0435\u0432\u044b\u0448\u0430\u0439\u0442\u0435 400 \u041c\u0415 \u0431\u0435\u0437 \u0440\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0430\u0446\u0438\u0438 \u0432\u0440\u0430\u0447\u0430.',
         });
       }
     });
@@ -482,20 +482,20 @@ export function analyzeSupplements(data: QuestionnaireData): AnalysisResult {
       if (processedPairs.has(pairKey)) return;
       processedPairs.add(pairKey);
 
-      if ((supplement.name === 'Витамин D3' || supplement.name === 'Витамин D') && synergyName === 'Кальций') {
+      if ((supplement.name === '\u0412\u0438\u0442\u0430\u043c\u0438\u043d D3' || supplement.name === '\u0412\u0438\u0442\u0430\u043c\u0438\u043d D') && synergyName === '\u041a\u0430\u043b\u044c\u0446\u0438\u0439') {
         interactions.push({
           type: 'synergy',
-          supplements: ['Витамин D', 'Кальций'],
-          interaction: 'Усиливают действие друг друга',
-          recommendation: 'Можно оставлять в одной схеме приема для лучшего усвоения.',
+          supplements: ['\u0412\u0438\u0442\u0430\u043c\u0438\u043d D', '\u041a\u0430\u043b\u044c\u0446\u0438\u0439'],
+          interaction: '\u0423\u0441\u0438\u043b\u0438\u0432\u0430\u044e\u0442 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435 \u0434\u0440\u0443\u0433 \u0434\u0440\u0443\u0433\u0430',
+          recommendation: '\u041c\u043e\u0436\u043d\u043e \u043e\u0441\u0442\u0430\u0432\u043b\u044f\u0442\u044c \u0432 \u043e\u0434\u043d\u043e\u0439 \u0441\u0445\u0435\u043c\u0435 \u043f\u0440\u0438\u0435\u043c\u0430 \u0434\u043b\u044f \u043b\u0443\u0447\u0448\u0435\u0433\u043e \u0443\u0441\u0432\u043e\u0435\u043d\u0438\u044f.',
         });
       }
-      if ((supplement.name === 'Витамин С' || supplement.name === 'Витамин C') && synergyName === 'Железо') {
+      if ((supplement.name === '\u0412\u0438\u0442\u0430\u043c\u0438\u043d \u0421' || supplement.name === '\u0412\u0438\u0442\u0430\u043c\u0438\u043d C') && synergyName === '\u0416\u0435\u043b\u0435\u0437\u043e') {
         interactions.push({
           type: 'synergy',
-          supplements: ['Витамин C', 'Железо'],
-          interaction: 'Витамин C улучшает усвоение железа',
-          recommendation: 'Комбинация особенно полезна при цели на энергию и восполнение дефицитов.',
+          supplements: ['\u0412\u0438\u0442\u0430\u043c\u0438\u043d C', '\u0416\u0435\u043b\u0435\u0437\u043e'],
+          interaction: '\u0412\u0438\u0442\u0430\u043c\u0438\u043d C \u0443\u043b\u0443\u0447\u0448\u0430\u0435\u0442 \u0443\u0441\u0432\u043e\u0435\u043d\u0438\u0435 \u0436\u0435\u043b\u0435\u0437\u0430',
+          recommendation: '\u041a\u043e\u043c\u0431\u0438\u043d\u0430\u0446\u0438\u044f \u043e\u0441\u043e\u0431\u0435\u043d\u043d\u043e \u043f\u043e\u043b\u0435\u0437\u043d\u0430 \u043f\u0440\u0438 \u0446\u0435\u043b\u0438 \u043d\u0430 \u044d\u043d\u0435\u0440\u0433\u0438\u044e \u0438 \u0432\u043e\u0441\u043f\u043e\u043b\u043d\u0435\u043d\u0438\u0435 \u0434\u0435\u0444\u0438\u0446\u0438\u0442\u043e\u0432.',
         });
       }
     });

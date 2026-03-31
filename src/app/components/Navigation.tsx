@@ -3,8 +3,6 @@ import { Link } from 'react-router';
 import { AnimatedButton } from './AnimatedButton';
 import { useAuth } from '../context/AuthContext';
 
-const TILDA_LANDING_URL = 'https://vitacode.tilda.ws/';
-
 export function Navigation() {
   const { user, logout } = useAuth();
 
@@ -18,7 +16,7 @@ export function Navigation() {
       <div className="container mx-auto px-4 md:px-8 lg:px-10">
         <div className="flex h-[75px] items-center justify-between">
           <div className="flex items-center gap-6 md:gap-10">
-            <a className="flex items-center gap-2" href={TILDA_LANDING_URL}>
+            <Link className="flex items-center gap-2" to="/">
               <div className="relative h-[22px] w-[22px] overflow-hidden rounded-full">
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="h-[21.5px] w-[9px] rotate-[33deg] rounded-[25px] bg-[#02B1CC]" />
@@ -34,21 +32,21 @@ export function Navigation() {
                 </svg>
               </div>
               <span className="text-[18.7px] font-semibold text-[#1F1F1F]">Vitacode</span>
-            </a>
+            </Link>
 
             <div className="hidden items-center gap-6 text-[12.5px] font-medium text-[#1F1F1F] md:flex">
-              <a className="transition-colors hover:text-[#02B1CC]" href={TILDA_LANDING_URL}>
+              <Link className="transition-colors hover:text-[#02B1CC]" to="/">
                 Главная
-              </a>
-              <Link className="transition-colors hover:text-[#02B1CC]" to="/blog">
-                Блог
+              </Link>
+              <Link className="transition-colors hover:text-[#02B1CC]" to="/questionnaire/step1">
+                Анкета
               </Link>
               <Link className="transition-colors hover:text-[#02B1CC]" to="/analysis">
                 Анализ
               </Link>
-              <a className="transition-colors hover:text-[#02B1CC]" href={TILDA_LANDING_URL}>
-                На лендинг
-              </a>
+              <Link className="transition-colors hover:text-[#02B1CC]" to="/blog">
+                Блог
+              </Link>
             </div>
           </div>
 
